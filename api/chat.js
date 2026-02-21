@@ -42,6 +42,10 @@ app.post("/api/llm", async (req, res) => {
   }
 });
 
-app.listen(8787, '0.0.0.0', () => {
-  console.log("✅ API server running: http://localhost:8787");
-}); 
+
+// 포트를 Render가 주는 환경 변수로 유연하게 받습니다.
+const PORT = process.env.PORT || 8787; 
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server is running on port ${PORT}`);
+});
