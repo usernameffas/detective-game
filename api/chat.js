@@ -2,23 +2,26 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
   try {
     const { system, messages, maxTokens } = req.body;
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
+    const r = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: maxTokens ?? 2000,
-        system,
-        messages,
+        model: "gpt-4o",
+        input: [
+          { role: "system", content: system },
+          ...(messages || []),
+        ],
+        max_output_tokens: maxTokens ?? 2000,
       }),
     });
     const data = await r.json();
     if (!r.ok) return res.status(500).json({ error: JSON.stringify(data) });
-    return res.json({ text: data.content[0].text });
+    const text = data.output?.find(x => x.type === "message")
+      ?.content?.find(c => c.type === "output_text")?.text ?? "";
+    return res.json({ text });
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }
