@@ -42,6 +42,6 @@ app.post("/api/llm", async (req, res) => {
   }
 });
 
-app.listen(8787, () => {
+app.listen(8787, '0.0.0.0', () => {
   console.log("✅ API server running: http://localhost:8787");
-});
+}); 

@@ -2,7 +2,7 @@
   "name": "detective-game",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite & node api/chat.js",
     "build": "vite build",
     "preview": "vite preview"
   },
