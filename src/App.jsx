@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 const callClaude = async (system, messages, maxTokens = 2000) => {
-  const res = await fetch('https://detective-api-fa60.onrender.com/api/llm', {
+  const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ system, messages, maxTokens }),
