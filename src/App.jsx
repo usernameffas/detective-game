@@ -188,7 +188,7 @@ RULES:
       log(`오류: ${e.message}`);
       log('AI 생성 실패 -> 샘플 시나리오로 자동 시작합니다');
       setError(null);
-      loadscenario(DUMMY);
+      loadScenario(DUMMY);
     }
   };
 
