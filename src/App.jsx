@@ -186,8 +186,9 @@ RULES:
       loadScenario(sc);
     } catch (e) {
       log(`오류: ${e.message}`);
-      setError(e.message);
-      setPhase(PHASE.TITLE);
+      log('AI 생성 실패 -> 샘플 시나리오로 자동 시작합니다');
+      setError(null);
+      loadscenario(DUMMY);
     }
   };
 
