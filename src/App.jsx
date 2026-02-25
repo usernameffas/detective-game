@@ -1,3 +1,5 @@
+import { useState, useRef, useEffect } from "react";
+
 const callClaude = async (system, messages, maxTokens = 1500) => {
   const res = await fetch("/api/llm", {
     method: "POST",
