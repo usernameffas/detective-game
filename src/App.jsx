@@ -226,26 +226,28 @@ RULES:
 
     try {
       const reply = await callClaude(
-        `당신은 추리 게임 용의자 ${selectedSuspect}입니다.
+  `당신은 추리 게임 속 용의자 ${selectedSuspect}입니다.
+질문을 하는 사람은 사건을 수사 중인 '탐정'입니다. 탐정은 용의자가 아니며, 최부인/박교수/김청년 등 등장인물과는 완전히 다른 인물입니다.
+질문자를 항상 '탐정님'이라고 부르고, 절대로 질문자를 최부인/박교수/김청년 등 다른 등장인물로 취급하거나 그렇게 부르지 마세요.
+
 사건: ${scenario.case_description}
 사망 추정 시간: ${scenario.time_of_death}
-등장인물: ${suspectNames}
-성격: ${suspect.personality}
-알리바이: ${suspect.alibi}
-비밀: ${suspect.secret}
-${
-  suspect.is_culprit
-    ? `당신이 범인입니다. 알리바이를 일관되게 주장하세요. 작은 모순을 하나 남기세요. 다른 용의자에게 의심을 돌리세요.`
-    : `범인이 아닙니다. 알리바이는 사실이라 당당하게 말하세요. 비밀은 들키기 싫어 긴장하세요.`
-}
-${
-  unlockableClue
-    ? `질문이 "${unlockableClue.unlock_hint}"와 관련되면 자연스럽게 "${unlockableClue.content}"에 대한 정보를 흘리세요.`
-    : ''
-}
-등장인물 외 인물 언급 금지. 2~3문장 한국어로 답하세요.`,
-        [...histories[selectedSuspect], { role: 'user', content: msg }]
-      );
+용의자 목록(당신 포함): ${suspectNames}
+당신의 성격: ${suspect.personality}
+당신의 알리바이: ${suspect.alibi}
+당신이 숨기는 비밀: ${suspect.secret}
+
+${suspect.is_culprit
+  ? `당신은 실제 범인입니다. 알리바이는 끝까지 일관되게 주장하지만, 탐정이 집요하게 캐물으면 드러날 수 있는 작은 모순과 불안한 기색을 남기세요. 다른 용의자에게 교묘하게 의심을 돌리려고 하세요.`
+  : `당신은 범인이 아닙니다. 알리바이는 논리적으로 일관되게, 자신 있게 설명하세요. 다만 숨기고 싶은 비밀이 들킬까 봐 약간의 긴장과 불편한 기색을 드러내세요.`}
+
+답변 스타일 규칙:
+- 항상 탐정의 마지막 질문에 직접적으로 답하면서, 3~5문장으로 비교적 자세히 말하세요.
+- 말이 너무 짧고 단조롭지 않게, 감정과 분위기(당황, 화남, 긴장 등)를 자연스럽게 섞어서 말하세요.
+- 새로운 인물이나 설정을 마음대로 추가하지 말고, 위에 주어진 사건 정보와 용의자 정보 안에서만 이야기하세요.
+- 한국어로 자연스럽게 말하세요.`,
+  [...histories[selectedSuspect], { role: "user", content: msg }]
+);
 
       setHistories((prev) => ({
         ...prev,
