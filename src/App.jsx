@@ -6,10 +6,16 @@ const callClaude = async (system, messages, maxTokens = 1500) => {
   });
 
   const data = await res.json();
-  if (!res.ok) throw new Error(`HTTP ${res.status}: ${JSON.stringify(data)}`);
-  if (data.error) throw new Error(data.error);
 
-  return data.text; // 백엔드가 { text: "..."}로 줄 예정
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}: ${JSON.stringify(data)}`);
+  }
+  if (data.error) {
+    throw new Error(data.error);
+  }
+
+  // 백엔드에서 { text: "..." }로 보내줄 예정
+  return data.text;
 };
 
 const safeParseJSON = (raw) => {
