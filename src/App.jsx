@@ -77,7 +77,7 @@ RULES: 실제 이름 사용(용의자ABC금지), culprit은 랜덤(항상 마지
     const s = scenario.suspects[selectedSuspect];
     try {
       const reply = await callAI(
-        `당신은 추리게임 용의자 ${selectedSuspect}. 사건:${scenario.case_description} 시간:${scenario.time_of_death} 등장인물:${Object.keys(scenario.suspects).join(",")} 성격:${s.personality} 알리바이:${s.alibi} 비밀:${s.secret} ${s.is_culprit?"범인임. 알리바이 주장하되 작은 모순 남기기.":"범인아님. 당당하게 말하기."} 등장인물외 언급금지. 2~3문장 한국어.`,
+        `당신은 추리게임 용의자 ${selectedSuspect}. 사건:${scenario.case_description} 시간:${scenario.time_of_death} 등장인물:${Object.keys(scenario.suspects).join(",")} 성격:${s.personality} 알리바이:${s.alibi} 비밀:${s.secret} ${s.is_culprit?"범인임. 알리바이 주장하되 작은 모순 남기기.":"범인아님. 당당하게 말하기."} 등장인물외 언급금지.`,
         [...histories[selectedSuspect], { role: "user", content: msg }]
       );
       setHistories(prev => ({ ...prev, [selectedSuspect]: [...prev[selectedSuspect], { role: "user", content: msg }, { role: "assistant", content: reply }] }));
